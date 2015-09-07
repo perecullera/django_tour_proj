@@ -11,9 +11,9 @@
     <h4>{{ apt.district }}</h4>
     <h4>{{ apt.neighborhood }}</h4>
     <h4>{{ apt.postal_code }}</h4>
-    {%for cat in apt.cats.all()%}
+    {%for cat in apt.cats.all%}
     <h4>{{cat.name}}</h4>
-
+    {% endfor%}
 
  </li>
   {% endfor %}
