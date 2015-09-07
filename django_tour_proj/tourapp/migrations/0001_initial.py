@@ -14,12 +14,22 @@ class Migration(migrations.Migration):
             name='Apartment',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id_2', models.IntegerField(default=None)),
+                ('neighborhood', models.CharField(max_length=100)),
                 ('name', models.CharField(max_length=120)),
-                ('street', models.CharField(max_length=120)),
-                ('number', models.IntegerField()),
+                ('district', models.CharField(max_length=120)),
+                ('created', models.DateTimeField()),
+                ('address', models.CharField(max_length=200)),
+                ('postal_code', models.IntegerField()),
                 ('latitude', models.FloatField()),
                 ('longitude', models.FloatField()),
-                ('license', models.CharField(max_length=120)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Category',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
@@ -28,5 +38,10 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=120)),
             ],
+        ),
+        migrations.AddField(
+            model_name='apartment',
+            name='cats',
+            field=models.ManyToManyField(to='tourapp.Category'),
         ),
     ]
