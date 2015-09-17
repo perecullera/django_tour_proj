@@ -3,6 +3,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
+from rest_framework import filters
 from rest_framework import viewsets
 
 from tourapp.models import Apartment, Owner
@@ -23,3 +24,5 @@ class AptViewSet(viewsets.ModelViewSet):
     """
     queryset = Apartment.objects.all()
     serializer_class = AptSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('id_2', 'neighborhood', 'name', 'district','created','cats','address','postal_code','latitude','longitude')
