@@ -1,22 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>
-  {% now "jS F Y" %}
-</h2>
-<ul>
-  {% for apt in apartments %}
-    <li><a href="{% url 'detail' apt.id %}">{{ apt.name }}</a></li>
-<!--  <li>
+
+
+<li>
     <h4>{{ apt.name }}</h4>
     <h4>{{ apt.address }}</h4>
     <h4>{{ apt.district }}</h4>
     <h4>{{ apt.neighborhood }}</h4>
     <h4>{{ apt.postal_code }}</h4>
     {%for cat in apt.cats.all%}
-    <h4>{{cat.name}}</h4>
+        <h4>{{cat.name}}</h4>
     {% endfor%}
-
- </li>-->
-  {% endfor %}
-</ul>
 {% endblock %}
+

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render_to_response
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response, render
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import RequestContext
 from rest_framework import filters
 from rest_framework import viewsets
@@ -18,11 +18,24 @@ def index(request):
                                                  }
                                              ))
 
+def detail(request, apt_id):
+    try:
+        Apt = Apartment.objects.get(pk=apt_id)
+    except Apartment.DoesNotExist:
+        raise Http404("Question does not exist")
+    return render(request, 'detail.html', {'apt': Apt})
+
+
 class AptViewSet(viewsets.ModelViewSet):
     """
      API endpoint that allows groups to be viewed or edited.
     """
     queryset = Apartment.objects.all()
     serializer_class = AptSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('id_2', 'neighborhood', 'name', 'district','created','cats','address','postal_code','latitude','longitude')
+
+    def get_queryset( self):
+        queryset = super(AptViewSet, self).get_queryset()
+        cats_name = self.request.query_params.get('cats__name', None)
+        if cats_name is not None:
+            queryset = queryset.filter(cats__name=cats_name)
+        return queryset
